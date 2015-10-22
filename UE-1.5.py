@@ -82,7 +82,7 @@ def main():
 	i=0
 	for x in fi:
 		fi[i]=x.real
-	plotfi1=plt.plot(np.linspace(-1,1,N),fi[:])
+	plotfi1=plt.plot(np.linspace(-3/2.,3./2,N),fi[0:N])
 	print "fi", fi
 	fn=IFT(fi)
 
@@ -92,7 +92,7 @@ def main():
 #	print "fn",fn
 #	fi=FT(fn)
 #	print "fi",fi
-	plotfn=plt.plot(np.linspace(-1,1,N),fn)
+	plotfn=plt.plot(np.linspace(-3./2,3./2,N),fn)
 #	plotfi=plt.plot(np.linspace(0,1,N),fi)
 #	fn=FT(fi)
 #	plotfn2=plt.plot(np.linspace(0,1,N),fn)

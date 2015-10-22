@@ -67,7 +67,7 @@ def IFT(data):
 def main():
 #	fi=Read()
 #	fi[:]=np.linspace(0,1,100)
-	N=1000
+	N=100
 	fi=[]
 	n=-N/2
 	while n<=N/2-1:

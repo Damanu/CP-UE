@@ -26,8 +26,8 @@ def Write(data):
 
 def FT(data):
 	N=len(data)
-	print "N"
-	print N
+#	print "N"
+#	print N
 	fn=[]
 	map(complex,data)
 	map(complex,fn)
@@ -46,8 +46,8 @@ def FT(data):
 	
 def IFT(data):
 	N=len(data)
-	print "N"
-	print N
+#	print "N"
+#	print N
 	fn=[]
 	map(complex,fn)
 	n=-N/2
@@ -64,8 +64,8 @@ def IFT(data):
 	return fn
 def IFTlong(data):
 	N=len(data)
-	print "N"
-	print N
+#	print "N"
+#	print N
 	fn=[]
 	map(complex,fn)
 	n=-N/2
@@ -89,7 +89,7 @@ def main():
 	filong_plot=[]
 	fi=Read()
 	fi=map(complex,fi)
-	print len(fi)	
+#	print len(fi)	
 #	fi[:]=np.linspace(0,1,100)
 	N=len(fi)
 	i=0
@@ -97,7 +97,7 @@ def main():
 		fi_plot.append(0)
 		fi_plot[i]=x.real
 		i+=1
-	print len(fi_plot)
+#	print len(fi_plot)
 	plotfi1=plt.subplot(4,1,1)
 	plotfi1=plt.plot(np.linspace(0,1,N),fi_plot[:])
 	plotfi1=plt.title("fi")
