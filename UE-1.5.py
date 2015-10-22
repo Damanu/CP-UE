@@ -53,9 +53,9 @@ def IFT(data):
 	i=-N/2
 	while n<=(N/2-1):
 #		print "n=",n+N/2
-		fn.append(0.0)
+		fn.append(0.j)
 		for fi in data:
-			fn[n+N/2]+=1.0*np.exp(2.0*np.pi*n*1.0j*i/N)*fi
+			fn[n+N/2]+=1.0*np.exp(2.0*np.pi*n*1.0j*i/(1.*N))*fi
 #			print i
 			i+=1
 		n+=1
@@ -71,15 +71,18 @@ def main():
 	fi=[]
 	n=-N/2
 	while n<=N/2-1:
-		fi.append(1.0j)
+		fi.append(0.j)
 		if n==0:
 			fi[n+N/2]=1./3. + 0.0j
 		elif n!=0:
-			fi[n+N/2]=3.*(1./(n*np.pi)*np.sin(n*np.pi/3.))**2.	
+			fi[n+N/2]=3.0/((n*np.pi)**2)*(np.sin(n*np.pi/3.0))**2.	
 		n+=1
 #	N=len(fi)
 #	fi=map(complex,fi)
-	plotfi1=plt.plot(np.linspace(-1,1,N),fi)
+	i=0
+	for x in fi:
+		fi[i]=x.real
+	plotfi1=plt.plot(np.linspace(-1,1,N),fi[:])
 	print "fi", fi
 	fn=IFT(fi)
 

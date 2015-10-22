@@ -31,7 +31,7 @@ def main():
 
 	fi=[]
 	i=0
-	N=300
+	N=100
 	while i<N:
 		fi.append(0j)
 		if i>=N/2-2*N/100 and i<=N/2+2*N/100:
