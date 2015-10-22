@@ -5,13 +5,13 @@ import numpy as np
 import matplotlib.pyplot as plt 
 
 PATH="./"
-FILE="data"
-
+OUTFILE="FT_data.txt"
+INFILE="Compl_num.txt"
 #----------subroutines--------------
 def Read():
 	data=[]		#data equals my fouriercoeffitients fi
 	try:
-		text = open(PATH+FILE,'r')	#open file to read
+		text = open(PATH+INFILE,'r')	#open file to read
 		data=text.read().splitlines()
 		text.close()
 		return data		
@@ -19,7 +19,7 @@ def Read():
 		print 'Something went wrong at %argv[0] subprogram Read() while reading the datafile'
 		sys.exit()
 def Write(data):
-	text = open(PATH+"FT_data",'w+')	#open filen to write
+	text = open(PATH+OUTFILE,'w+')	#open filen to write
 	for x in data:
 		text.write(str(x)+"\n")	#write data to file 
 	text.close()
@@ -29,6 +29,7 @@ def FT(data):
 	print "N"
 	print N
 	fn=[]
+	map(complex,data)
 	map(complex,fn)
 	n=-N/2
 	i=-N/2
@@ -65,21 +66,47 @@ def IFT(data):
 
 #--------------Main Program---------------
 def main():
+	fi_plot=[]
+	fn_plot=[]
 	fi=Read()
-	fi[:]=np.linspace(0,1,100)
-	N=len(fi)
 	fi=map(complex,fi)
-	plotfi1=plt.plot(np.linspace(0,1,N),fi)
-	print "fi", fi
+	print len(fi)	
+#	fi[:]=np.linspace(0,1,100)
+	N=len(fi)
+	i=0
+	for x in fi:
+		fi_plot.append(0)
+		fi_plot[i]=x.real
+		i+=1
+	print len(fi_plot)
+	plotfi1=plt.subplot(3,1,1)
+	plotfi1=plt.plot(np.linspace(0,1,N),fi_plot[:])
+	plotfi1=plt.title("fi")
+#	print "fi", fi
 	fn=FT(fi)
+	i=0
+	for x in fn:
+		fn_plot.append(0)
+		fn_plot[i]=x.real
+		i+=1
+	plotfn=plt.subplot(3,1,2)
+	plotfn=plt.plot(np.linspace(0,1,N),fn_plot[:])
+	plotfn=plt.title("fn")
 	Write(fn)
-	print "fn",fn
+#	print "fn",fn
 	fi=IFT(fn)
-	print "fi",fi
-	plotfn=plt.plot(np.linspace(0,1,N),fn)
-	plotfi=plt.plot(np.linspace(0,1,N),fi)
-	fn=FT(fi)
-	plotfn2=plt.plot(np.linspace(0,1,N),fn)
+	i=0
+	for x in fi:
+		fi_plot.append(0)
+		fi_plot[i]=x.real
+		i+=1
+#	print "fi",fi
+	plotfi=plt.subplot(3,1,3)
+	plotfi=plt.plot(np.linspace(0,1,N),fi_plot[0:N])
+	plt.title("fi")
+#	fn=FT(fi)
+#	plotfn2=plt.plot(np.linspace(0,1,N),fn)
+#	plotfn2=plt.subplot(4,1,4)
 	plt.show()
 if __name__=="__main__":
 	main()
