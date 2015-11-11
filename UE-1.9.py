@@ -107,10 +107,11 @@ def main():
 	fi=[]
 	tft=[]
 	tfft=[]
-	Nmax=60
+	Nmax=200
 	N=2
 	while N<=Nmax:
 		i=0
+		fi=[]
 		while i<N:
 			fi.append(np.cos(i*2*np.pi/N)+0.j)
 			i+=1
