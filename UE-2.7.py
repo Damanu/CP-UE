@@ -4,54 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
-def fweu(func,dx):
-	N=len(func)
-	fx=[]
-	i=0
-	while i<N-1:
-		fx.append((func[i+1]-func[i])/dx)
-		i+=1
-	return fx		
-
-def fbeu(func,dx):	#functions starts at second point (so fx[0]=fx_real[1])
-	N=len(func)
-	fx=[]
-	i=1
-	while i<N:
-		fx.append((func[i]-func[i-1])/dx)
-		i+=1
-	return fx		
-
-def fzd(func,dx):	#functions starts at second point (so fx[0]=fx_real[1])
-	N=len(func)
-	fx=[]
-	i=1
-	while i<N-1:
-		fx.append((func[i+1]-func[i-1])/(2*dx))
-		i+=1
-	return fx		
-
-def fzd2(func,dx):	#functions starts at second point (so fx[0]=fx_real[1])
-	N=len(func)
-	fx=[]
-	i=1
-	while i<N-1:
-		fx.append((func[i+1]-2*func[i]+func[i-1])/(dx**2))
-		i+=1
-	return fx		
-
-
-
-
-def sd(func,func_real):	#standard deviation
-	N=len(func)
-	var=0	
-	i=0
-	while i < N:
-		var+=(func[i]-func_real[i])**2
-		i+=1
-	return np.sqrt(var/N*1.)
-
 def eu_int_fw(LU,U,dt):
 	return (U + dt*LU)
 
@@ -62,8 +14,11 @@ def eu_int_impl(LU,U,dt): #only for harmonic oszi
 def leapfrog(LU,U,dt,i):
 	return ((U[i-1]+2.*dt*LU[i]))
 
+def eu_impl_2 (LU,U,dt,i):
+	return (U[i]+dt/2*(LU[i]+LU[i+1])
+
 def main():
-	T=100.
+	T=10.
 	N=10000
 	dt=T/N
 	print dt
