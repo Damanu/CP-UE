@@ -15,32 +15,48 @@ def leapfrog(LU,U,dt,i):
 	return ((U[i-1]+2.*dt*LU[i]))
 
 def eu_impl_2 (LU,U,dt,i):
-	return (U[i]+dt/2*(LU[i]+LU[i+1])
+	return (U[i]-dt/2*(LU[i]+LU[i+1]))
 
-def main():
-	T=10.
-<<<<<<< HEAD
-	N=10000
-=======
-	N=1000
->>>>>>> 1621e0da9bea4419785a48453779cd0e41429d9c
+def main(argv):
+	print argv[1]
+	N=100
+	T=14.
 	dt=T/N
+	
 	print dt
 	xaxe=np.linspace(0,T,N)
-	v=[0.,-np.sin(dt)]
-	x=[1.,np.cos(dt)]
-	i=1	
 	ddt=0.
-	while i<N-1:
-	#	v.append(eu_int_impl(v[i],-x[i],dt))
-	#	x.append(eu_int_fw(x[i], v[i+1],dt))
-		v.append(leapfrog(v,x,-dt,i))
-		x.append(leapfrog(x,v,dt,i))
-		i+=1
+	if argv[1]=="1":
+		v=[0.]
+		x=[1.]
+		i=0
+		while i<N-1:
+			v.append((v[i]-dt*x[i])/(1+dt**2))
+			x.append(x[i]+dt*v[i+1])
+			i+=1
+	elif argv[1]=="2":
+		v=[0.,-np.sin(dt)]
+		x=[1.,np.cos(dt)]
+		i=1
+		while i<N-1:
+			v.append(v[i-1]-2*dt*x[i])
+			x.append(x[i-1]+2*dt*v[i])
+			i+=1
+	elif argv[1]=="3":
+		v=[0.]
+		x=[1.]
+		i=0
+		while i<N-1:
+			v.append((v[i]-dt*x[i]+dt**2/4.*v[i])/(1.-dt**2/4))
+			x.append(x[i]-dt*(v[i]+v[i+1]))	
+			i+=1
+	else:
+		print "error"
+		sys.exit()
 	plt.plot(xaxe,v)
 	plt.plot(xaxe,x)
 	plt.show()
 
 
 if __name__=="__main__":
-	main()
+	main(sys.argv)
