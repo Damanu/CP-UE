@@ -57,9 +57,15 @@ def main():
 	sbw=[]
 	szd=[]
 	szd2=[]
+<<<<<<< HEAD
 	M=50	#max number of steps
 	dN=1	#stepsize
 	N=3	#startingpoint
+=======
+	M=100
+	dN=1
+	N=5
+>>>>>>> 7de58c7e947ff1d06d5dc682fe651062aa8c170f
 	while N<=M:
 		N_real=N
 		L=1.
@@ -67,10 +73,14 @@ def main():
 		x=np.linspace(0,1,N)
 		x_real=np.linspace(0,1,N_real)
 
-		y=np.sin(np.pi*x)	#defining function
-		y_real=np.sin(np.pi*x_real)	
-		yx_real=np.cos(np.pi*x_real)*np.pi
-		yxx_real=-np.sin(np.pi*x_real)*np.pi**2
+	#	y=np.sin(np.pi*x)	#defining function
+	#	y_real=np.sin(np.pi*x_real)	
+		y=np.exp(x*np.pi)
+		y_real=np.exp(x*np.pi)
+		yx_real=np.exp(x*np.pi)*np.pi
+		yxx_real=np.exp(x*np.pi)*np.pi**2
+	#	yx_real=np.cos(np.pi*x_real)*np.pi
+	#	yxx_real=-np.sin(np.pi*x_real)*np.pi**2
 
 
 	#---------derivations------------------
@@ -92,7 +102,7 @@ def main():
 #	plt.plot(x[1:len(yxzd)+1],yxzd)
 #	plt.plot(x_real,y_real)
 #	plt.plot(x_real,yx_real)
-	xaxe=np.linspace(1./3,dx,M/dN-2)
+	xaxe=np.linspace(1./5,dx,M/dN-4)
 	plt.subplot(4,1,1)
 	plt.title("fw")
 	plt.plot(xaxe,np.log(sfw))
