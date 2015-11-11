@@ -104,10 +104,12 @@ def IFTlong(data):
 #--------------Main Program---------------
 def main():
 	fi=[]
-	N=10
+	N=220
 	T=5.
 	dt=T/N
+	print "dt",dt
 	omg=2.*np.pi/dt
+	print "omg",omg
 	i=0
 	ti=0
 	while i<=N-1:
@@ -116,8 +118,6 @@ def main():
 			fi.append(0j)
 		else:
 			fi.append(np.exp(-ti)+0.j)	
-		print ti 
-		print fi[i]
 		i+=1
 	fn=FT(fi)
 	fnlong=FTlong(fi)

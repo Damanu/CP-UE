@@ -57,9 +57,9 @@ def main():
 	sbw=[]
 	szd=[]
 	szd2=[]
-	M=100
-	dN=1
-	N=3
+	M=50	#max number of steps
+	dN=1	#stepsize
+	N=3	#startingpoint
 	while N<=M:
 		N_real=N
 		L=1.
@@ -94,13 +94,17 @@ def main():
 #	plt.plot(x_real,yx_real)
 	xaxe=np.linspace(1./3,dx,M/dN-2)
 	plt.subplot(4,1,1)
-	plt.plot(xaxe,sfw)
+	plt.title("fw")
+	plt.plot(xaxe,np.log(sfw))
 	plt.subplot(4,1,2)
-	plt.plot(xaxe,sbw)
+	plt.title("bw")
+	plt.plot(xaxe,np.log(sbw))
 	plt.subplot(4,1,3)
-	plt.plot(xaxe,szd)
+	plt.title("zd")
+	plt.plot(xaxe[1:N],np.log(szd[1:N]))
 	plt.subplot(4,1,4)
-	plt.plot(xaxe,szd2)
+	plt.title("bw2")
+	plt.plot(xaxe,np.log(szd2))
 	plt.show()
 
 if __name__=="__main__":
