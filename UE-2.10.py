@@ -6,17 +6,17 @@ import sys
 
 def main(argv):
 	w=float(argv[1])
-	N=100
-	T=10.
+	y=float(argv[2])
+	N=10000
+	T=100.
 	dt=T/N
+	print dt
 	v=[0]
 	x=[1]
 	i=0
 	while i<N-1:
-		v_=(v[i]-w**2*dt*x[i])
-		x_=(x[i]+dt*v[i])
-		v.append(v[i]-w**2*dt*x_)
-		x.append(x[i]+dt*v_)
+		v.append(v[i]*(1-y*dt)-w**2*dt*x[i])
+		x.append(x[i]+dt*v[i])
 		i+=1
 	xaxe=np.linspace(0,T,N)
 	plt.plot(xaxe,v)
