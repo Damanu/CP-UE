@@ -8,7 +8,7 @@ def main(argv):
 	w=float(argv[1])
 	y=float(argv[2])
 	N=10000
-	T=100.
+	T=20.
 	dt=T/N
 	print dt
 	v=[0]

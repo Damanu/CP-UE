@@ -18,27 +18,39 @@ def fzd(func,dx):	#functions starts at second point (so fx[0]=fx_real[1])
 
 def main():
 	u=[[]]
-	T=1.	#timeinterval
-	X=10.	#spaceinterval
-	dt=0.1
-	dx=0.23
+	T=0.05	#timeinterval
+	X=1.	#spaceinterval
+	NX=100
+	dx=X/NX
+	dt=dx**2/6.
+#	dx=np.sqrt(dt*6)
 	D=1.
 	NT=int(T/dt)
-	NX=int(X/dx)
+#	NX=int(X/dx)
 	j=0
 	n=0
-	while j<NX-1:
-		u[0].append(np.sin(np.pi*dx*j))	# index 0 is time, 1 is position
-	n=1
-	while n<T-1: #
-		j=0
-		u.append([0])	#lower boundary
-		while j<N-3:
-			u[n].append(u[n][j+1]+D*dt/dx**2*(u[n][j+2]-2*u[n][j+1]+u[n][j]))
-			j+=1
-		u[n].append(0)	#upper boundary
-		n+=1
 	print NT
 	print NX
+	while j<NX:
+		u[0].append(np.sin(np.pi*dx*j))	# index 0 is time, 1 is position
+		j+=1
+	n=0
+	print len(u[0])
+	while n<NT: #
+		j=1
+		u.append([0])	#lower boundary
+		while j<NX-1:
+			u[n+1].append(u[n][j]+D*dt/dx**2*(u[n][j+1]-2*u[n][j]+u[n][j-1]))
+			j+=1
+			print j
+		u[n+1].append(0)	#upper boundary
+		print "u len: ",len(u[n+1])
+		n+=1
+	xaxe=np.linspace(0,X,len(u[NT-1]))
+	print u
+	taxe=np.linspace(0,T,len(u[0]))
+	plt.plot(xaxe,u[0])
+	plt.plot(xaxe,u[NT-1])
+	plt.show()
 if __name__=="__main__":
 	main()
