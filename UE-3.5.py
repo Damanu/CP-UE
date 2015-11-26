@@ -27,11 +27,11 @@ def main():
 		w=disp(dt,dx,v,k)*dt/a
 		w_=disp_analyt(v,k)*dt/a
 		plt.subplot(1,2,1)
-		plt.plot(k,abs(w.real),color='r')
+		plt.plot(k,(w.real),color='r')
 		plt.plot(k,disp_analyt(v,k),color='b')
 		plt.subplot(1,2,2)
-		plt.plot(k,abs(w.imag))
-		plt.plot(k,abs(disp_analyt(v,k).imag))
+		plt.plot(k,(w.imag))
+		plt.plot(k,(disp_analyt(v,k).imag))
 		v+=0.25
 	plt.show()
 if __name__=="__main__":
