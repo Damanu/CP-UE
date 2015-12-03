@@ -16,108 +16,114 @@ def function(t,x):
 			f[i]=0
 		i+=1
 	return f
-def LAX_WENDROF_con(NX,NT,dx,dt,v,A):
-	u=startcond(NX,NT,dx,dt,A)
+def LAX_WENDROF_con(NX,NT,dx,dt,v):
+	u=startcond(NX,NT,dx,dt)
 	n=0
 	while n<NT: 
-		j=1
+		j=3
 		u.append([1.])	#lower boundary
+		u[n].insert(NX,u[n][1])
+		u[n].insert(NX+1,u[n][2])
+		u[n].insert(0,u[n][NX-2])
+		u[n].insert(NX+1,u[n][NX-3])
+		print len(u[n])
 		while j<NX-1:
-			if j==1:
-				u.insert(0,u[n][NX-1])
-				
-				F=3*u[n][j+1]**2+zdif2(u,dx,n,j+1)
-				Fup=3*u[n][j+2]**2+zdif2(u,dx,n,j+2)
-				Fdo=3*u[n][j]**2+zdif2(u,dx,n,j)
-				
-				i.insert(0,u[n][NX-1])
-				Fup2=3*u[n][j+2]**2+zdif2(u,dx,n,j+2)
-				Fdo2=3*u[n][j]**2+zdif2(u,dx,n,j)
-				
-				u.pop(0)
-				u.pop(0)
-			elif j==NX-2:
-				u.insert(NX,u[n][0])
-				F=3*u[n][j]**2+zdif2(u,dx,n,j)
-				Fup=3*u[n][j+1]**2+zdif2(u,dx,n,j+1)
-				Fdo=3*u[n][j-1]**2+zdif2(u,dx,n,j-1)
-				
-				u.insert(NX+1,u[n][1])
+#			if j<=1:
+#				u[n].insert(0,u[n][NX-2])
+#				
+#				F=3*u[n][j+1]**2+zdif2(u,dx,n,j+1)
+#				Fup=3*u[n][j+2]**2+zdif2(u,dx,n,j+2)
+#				Fdo=3*u[n][j]**2+zdif2(u,dx,n,j)
+#				
+#				u[n].insert(0,u[n][NX-2])
+#				Fup2=3*u[n][j+2]**2+zdif2(u,dx,n,j+2)
+#				Fdo2=3*u[n][j]**2+zdif2(u,dx,n,j)
+#				
+#				u[n].pop(0)
+#				u[n].pop(0)
+#			elif j>=NX-2:
+#				u[n].insert(NX,u[n][1])
+#				F=3*u[n][j]**2+zdif2(u,dx,n,j)
+#				Fup=3*u[n][j+1]**2+zdif2(u,dx,n,j+1)
+#				Fdo=3*u[n][j-1]**2+zdif2(u,dx,n,j-1)
+#				
+##				u[n].insert(NX+1,u[n][2])
+#
+#				Fup2=3*u[n][j+2]**2+zdif2(u,dx,n,j+2)
+#				Fdo2=3*u[n][j]**2+zdif2(u,dx,n,j)
+#
+###				u[n].pop()
+#				u[n].pop()
+#			else:
+			F=3*u[n][j]**2+zdif2(u,dx,n,j)
+			Fup=3*u[n][j+1]**2+zdif2(u,dx,n,j+1)
+			Fdo=3*u[n][j-1]**2+zdif2(u,dx,n,j-1)
+			
+#				u[n].insert(NX,u[n][1])
 
-				Fup2=3*u[n][j+2]**2+zdif2(u,dx,n,j+2)
-				Fdo2=3*u[n][j]**2+zdif2(u,dx,n,j)
+			Fup2=3*u[n][j+2]**2+zdif2(u,dx,n,j+2)
+			Fdo2=3*u[n][j-2]**2+zdif2(u,dx,n,j-2)
+			
+#				u[n].pop()
 
-				u.pop()
-				u.pop()
-			else:
-				F=3*u[n][j]**2+zdif2(u,dx,n,j)
-				Fup=3*u[n][j+1]**2+zdif2(u,dx,n,j+1)
-				Fdo=3*u[n][j-1]**2+zdif2(u,dx,n,j-1)
-					
-	
-				Fup2=3*u[n][j+2]**2+zdif2(u,dx,n,j+2)
-				Fdo2=3*u[n][j-2]**2+zdif2(u,dx,n,j-2)
-
-
-#			Fup=u[n][j+1]/(dx)*(u[n][j]-u[n][j-1])
-#			Fdo=u[n][j-1]/(2.*dx)*(u[n][j+1]-u[n][j])
-					
-	
+			Fup=u[n][j+1]/(dx)*(u[n][j]-u[n][j-1])
+			Fdo=u[n][j-1]/(2.*dx)*(u[n][j+1]-u[n][j])
 			uright=(1/2.*(u[n][j+1]+u[n][j])-dt/(2.*dx)*(Fup-F))
 			uleft=(1/2.*(u[n][j]+u[n][j-1])-v*dt/(2.*dx)*(F-Fdo))
 			
-			uright2=(1/2.*(u[n][j+1]+u[n][j])-dt/(2.*dx)*(Fup2-Fup))
-			uleft2=(1/2.*(u[n][j]+u[n][j-1])-v*dt/(2.*dx)*(Fdo-Fdo2))
+			uright2=(1/2.*(u[n][j+2]+u[n][j+1])-dt/(2.*dx)*(Fup2-Fup))
+			uleft2=(1/2.*(u[n][j-1]+u[n][j-2])-v*dt/(2.*dx)*(Fdo-Fdo2))
 			
 	
 	
-			Fup_=3*u[n][j+1]**2+zdif2(u,dx,n,j+1)
-			Fdo_=3*u[n][j-1]**2+zdif2(u,dx,n,j-1)
+			Fup_=3*uright**2+(uright2-2*uright+uleft)/(dx**2.)
+			Fdo_=3*uleft**2+(uright-2*uleft+uleft2)/(dx**2.)
+
 			
 			url_=(uright+uleft)/2.
 			
 #			F_=url_/(2.*dx)*(uright-uleft)
 			
 			
-			
 #			uright=(1/2.*(u[n][j+1]+u[n][j])-v*dt/(2.*dx)*(u[n][j+1]-u[n][j]))
 #			uleft=(1/2.*(u[n][j]+u[n][j-1])-v*dt/(2.*dx)*(u[n][j]-u[n][j-1]))
-			u[n+1].append(u[n][j]-v*dt/dx*(uright-uleft))
+			u[n+1].append(u[n][j]-dt/dx*(Fup_-Fdo_))
 #			u[n+1].append(u[n][j]-v*dt/dx*(uright-uleft))
 			j+=1
-		u[n+1].append(u[n][0])	#upper boundary
+		u[n].pop()	
+		u[n].pop()	
+		u[n].pop(0)	
+		u[n].pop(0)	
+		u[n+1].append(1.)	#upper boundary
+		print len(u[n])
 #		u[n+1].append(u[n+1][NX-2]+3*u[n+1][NX-3]+u[n+1][NX-4])
 		n+=1
 	return u
 
 
-def startcond(NX,NT,dx,dt,A):
+def startcond(NX,NT,dx,dt):
 	u=[[]]
 	j=0
 	n=0
 	while j<NX:
-		if dx*j>=0 and dx*j<=0.2:
-			u[0].append(1+A/2.*(1.-np.cos(10.*np.pi*dx*float(j))))	# index 0 is time, 1 is position
-		else:
-			u[0].append(1.)	# index 0 is time, 1 is position
+		u[0].append(2./np.cosh(j*dx))	# index 0 is time, 1 is position
 		j+=1
 	return u
+
+
 	
 def main():
-	T=0.8	#timeinterval
-	X=1.	#spaceinterval
+	T=1.	#timeinterval
+	X=10.	#spaceinterval
 	NX=500
 	dx=X/float(NX)
-	dt=0.0005
-	D=1.
+	dt=0.005
 	NT=int(T/dt)
 	v=1.
-	A=0.05
 	j=0
 	n=0
-	v=1.
-	uwen=LAX_WENDROF_con(NX,NT,dx,dt,v,A)
-
+	uwen=LAX_WENDROF_con(NX,NT,dx,dt,v)
+	print uwen[NT-1]
 #	taxe=np.linspace(0,T,len(u))
 #	plt.plot(xaxe,u[0],color='b')
 #	plt.plot(xaxe,function(0.05,xaxe),color='y')
