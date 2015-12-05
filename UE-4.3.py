@@ -1,5 +1,6 @@
 #/usr/bin/python!
 
+<<<<<<< HEAD
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
@@ -82,4 +83,14 @@ def main(argv):
 
 
 if __name__=="__main__":
+=======
+
+
+
+
+def main(argv):
+	
+
+if __name__="__main__":
+>>>>>>> aece44baf60133cec1ee6f54f87114ba55e28777
 	main(sys.argv)
