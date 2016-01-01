@@ -6,23 +6,36 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 
-def makeB(NX,NY):
-	B=np.diag(np.linspace(1,1,NX*NY),0)+np.diag(np.linspace(-1,-1,NX*NY-1),1)+np.diag(np.linspace(-1,-1,NX*NY-1),-1)+np.diag(np.linspace(-1,-1,NX*NY-NX),NX)+np.diag(np.linspace(-1,-1,NX*NY-NX),-NX)
-	return B		
+def makeA(NX,NY):
+	A=-np.diag(np.ones(NX*NY),0)*4+np.diag(np.ones(NX*NY-1),1)+np.diag(np.ones(NX*NY-1),-1)+np.diag(np.ones(NX*NY-NX),NX)+np.diag(np.ones(NX*NY-NX),-NX)
+	return A
+
+def makeB(NX,NY,A):
+	B=np.diag(np.ones(NX*NY),0)-A	
+	return B
 
 def transform(NX,NY,u):
-	ut=[[]]
+	ut=[]
 	x=0
 	y=0
 	while x<NX:
+		y=0
+		ut.append([])
 		while y<NY:
 			ut[x].append(u[x+y*NX])
 			y+=1
-		ut.append([])
 		x+=1
 	return ut
 
-def initu(NX,NY,dx,dy):
+def transform_(u):
+	u_=[]
+	NX=len(u)
+	x=0
+	while x<NX:
+		u_.append(u[x])
+		x+=1
+
+def initu(NX,NY,dx,dy): 	#randbedignung der dgl
 	u=np.linspace(0,0,NX*NY)
 	i=0
 	while i<NX:
@@ -36,9 +49,14 @@ def initu(NX,NY,dx,dy):
 		i+=1
 	return u	
 
-def iter(B,u):
-	u_=np.dot(B,u)
+def iter(B,roh,u):
+	u_=np.dot(B,u)+roh
 	return u_
+
+def mkroh(NX,NY):	#ladungsdichte
+	roh=np.zeros(NX*NY)
+	return roh
+
 
 def main(argv):
 	X=2.
@@ -47,22 +65,36 @@ def main(argv):
 	NY=100
 	dx=X/NX
 	dy=Y/NY
-	B=makeB(NX,NY)
+	A=makeA(NX,NY)
+	B=makeB(NX,NY,A)
+	roh=mkroh(NX,NY)
 	u=initu(NX,NY,dx,dy)
-	print len(u)
 	itnum=10	
 	i=0
-	while i<itnum:
-		u=iter(B,u)
+	eps=1
+	while eps>0.01:
+		print i
+		u_=iter(B,roh,u)
+		eps=abs(np.mean(u)-np.mean(u_))
+		u=u_
 		i+=1
-	print len(u)
-	ut=transform(NX,NY,u)
-#	plt.plot2d(np.linspace(-1,1,NX*NY),ut[:][0])
-	xs=np.linspace(-1,1,NX)
-	ys=np.linspace(-1,1,NY)
 
-	Axes3D.plot(xs,ys,ut)
-#	plt.show()
+
+	ut=transform(NX,NY,u)
+	ux,uy=np.gradient(ut)
+	x=np.linspace(0,X,NX)
+	y=np.linspace(0,Y,NY)
+	fig,ax=plt.subplots()
+	ax.quiver(x,y,ux,uy,ut)
+	ax.set(aspect=1,title="bla")
+	plt.show()
+	
+#	plt.plot2d(np.linspace(-1,1,NX*NY),ut[:][0])
+#	xs=np.linspace(-1,1,NX)
+#	ys=np.linspace(-1,1,NY)
+
+#	Axes3D.plot(xs,ys,ut)
+##	plt.show()
 
 
 if __name__=="__main__":
