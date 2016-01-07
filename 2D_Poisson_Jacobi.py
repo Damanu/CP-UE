@@ -66,22 +66,22 @@ def mkroh(NX,NY):	#ladungsdichte
 		y=0
 		roh.append([])
 		while y<NY:
-	#		if y<3*NY/4 and y>NY/4 and x==3*NX/4:
-	#			roh[x].append(-10.)
-	#		elif y<3*NY/4 and y>NY/4 and x==3*NX/4+2:
-	#			roh[x].append(10.)
-	#		elif y<3*NY/4 and y>NY/4 and x==NX/4:
-	#			roh[x].append(10.)
-	#		elif y<3*NY/4 and y>NY/4 and x==NX/4-2:
-	#			roh[x].append(-10.)
+			if y<3*NY/4 and y>NY/4 and x==3*NX/4:
+				roh[x].append(-10.)
+			elif y<3*NY/4 and y>NY/4 and x==3*NX/4+2:
+				roh[x].append(10.)
+			elif y<3*NY/4 and y>NY/4 and x==NX/4:
+				roh[x].append(10.)
+			elif y<3*NY/4 and y>NY/4 and x==NX/4-2:
+				roh[x].append(-10.)
 #			if y==3*NY/4 and x==NX/2:
 #				roh[x].append(10.)
 #			elif y==NY/4 and x==NX/2:
 #				roh[x].append(-10.)
-			if y<NY/2 and y>NY/4 and x==NX/2:
-				roh[x].append(-10.)
-			elif y>=NY/2 and y<3*NY/4 and x==NX/2:
-				roh[x].append(10.)
+	#		if y<NY/2 and y>NY/4 and x==NX/2:
+	#			roh[x].append(-10.)
+	#		elif y>=NY/2 and y<3*NY/4 and x==NX/2:
+	#			roh[x].append(10.)
 			else:
 				roh[x].append(0.)
 			y+=1

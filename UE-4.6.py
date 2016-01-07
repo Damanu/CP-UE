@@ -27,7 +27,7 @@ def makeP():
 	return P
 		
 def makeR(P):
-	R=P.T*2
+	R=P.T*1/2.
 	return R
 def main():
 	A=makeA()
