@@ -5,26 +5,27 @@ import numpy as np
 
 
 def makeA():
-	i=1
-	j=1
-	k=1
-	l=1
-	A=np.zeros((8,8,8,8))
-	while i<=8:
-		j=1
-		while j<=8:
-			k=1
-			while k<=8:
-				l=1
-				while l<=8:
+	N=8
+	i=0
+	j=0
+	k=0
+	l=0
+	A=np.zeros((N,N,N,N))
+	while i<N:
+		j=0
+		while j<N:
+			k=0
+			while k<N:
+				l=0
+				while l<N:
 					if i==k and j==l:
-						A[i-1][j-1][k-1][l-1]=-4.
-					elif (i==k and j==l+1) or (i==k+1 and j==l) or (i==k and j==l-1) or (i==k-1 and j==l):
-						A[i-1][j-1][k-1][l-1]=1.
+						A[(i)][(j)][(k)][(l)]=-4.
+					elif (i==k and j==(l+1)%N) or (i==(k+1)%N and j==l) or (i==k and j==(l-1)%N) or (i==(k-1)%N and j==l):
+						A[(i)][(j)][(k)][(l)]=1.
 					else:
-						A[i-1][j-1][k-1][l-1]=0.
+						A[(i)][(j)][(k)][(l)]=0.
 						
-					l+=1
+					l=l+1
 				k+=1
 			j+=1
 		i+=1
@@ -32,26 +33,27 @@ def makeA():
 	return A
 
 def makeP():
-	i=1	#bis 8
-	j=1	#bis 8
-	k=1	#bis 4
-	l=1	#bis 4
-	P=np.zeros((8,8,4,4))
-	while i<=8:
-		j=1
-		while j<=8:
-			k=1
-			while k<=4:
-				l=1
-				while l<=4:
+	N=8
+	i=0	#bis 7
+	j=0	#bis 7
+	k=0	#bis 3
+	l=0	#bis 3
+	P=np.zeros((N,N,N/2,N/2))
+	while i<N:
+		j=0
+		while j<N:
+			k=0
+			while k<N/2:
+				l=0
+				while l<N/2:
 					if i==2*k and j==2*l:
-						P[i-1][j-1][k-1][l-1]=1
-					elif (i==2*k and j==2*l+1) or (i==2*k+1 and j==2*l) or (i==2*k and j==2*l-1) or (i==2*k-1 and j==2*l):
-						P[i-1][j-1][k-1][l-1]=1/2.
-					elif (i==2*k+1 and j==2*l+1) or (i==2*k+1 and j==2*l-1) or (i==2*k-1 and j==2*l-1) or (i==2*k-1 and j==2*l+1):
-						P[i-1][j-1][k-1][l-1]=1/4.
+						P[i][j][k][l]=1.
+					elif (i==2*k and j==(2*l+1)%N) or (i==(2*k+1)%N and j==2*l) or (i==2*k and j==(2*l-1)%N) or (i==(2*k-1)%N and j==2*l):
+						P[i][j][k][l]=1/2.
+					elif (i==(2*k+1)%N and j==(2*l+1)%N) or (i==(2*k+1)%N and j==(2*l-1)%N) or (i==(2*k-1)%N and j==(2*l-1)%N) or (i==(2*k-1)%N and j==(2*l+1)%N):
+						P[i][j][k][l]=1/4.
 					else:
-						P[i-1][j-1][k-1][l-1]=0.
+						P[i][j][k][l]=0.
 						
 					l+=1
 				k+=1
@@ -124,7 +126,6 @@ def main():
 	A=makeA()
 #	print "A\n",A
 	P=makeP()
-#	print "\nP\n",P
 	R=makeR(P)
 	A_=RAP(R,A,P)
 	i=1
@@ -135,8 +136,9 @@ def main():
 #	Ah=np.dot(R,np.dot(A,P))
 #	print "\nR\n",R
 #	print "\nR*A*P\n",RAP(R,A,P)
-	print A[0]
-	print A_[0]
+	print "\nP\n",P[:][0][:]
+	print A[0][0]
+	print A_[0][0]
 #	print Ah[1][1]
 if __name__=="__main__":
 	main()
