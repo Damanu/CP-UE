@@ -68,7 +68,7 @@ def makeR(P):
 	j=0
 	k=0
 	l=0
-	c=1/4.
+	c=1/2.
 	while i<8:
 		j=0
 		while j<8:
@@ -83,62 +83,63 @@ def makeR(P):
 		i+=1
 	return R
 
-def RAP(R,A,P):
-	i=0
-	j=0
-	k=0
-	l=0
-	m=0
-	n=0
-	m_=0
-	n_=0
-	U=np.zeros((8,8,4,4))
-	A_=np.zeros((4,4,4,4))
-	while i<4:
-		j=0
-		while j<4:
+def RAP_easy(R,A,P):
+	N=8
+	m=0	#bis 7 u 3
+	n=0	#bis 7 u 3	
+	k=0	#bis 3
+	l=0	#bis 3
+	i=0	#bis 3
+	j=0	#bis 3
+
+	U=np.zeros((N,N,N/2,N/2))	
+	A2h=np.zeros((N,N,N/2,N/2))	
+
+	while m<N:
+		n=0
+		while n<N:
 			k=0
-			while k<4:
+			while k<N/2:
 				l=0
-				while l<4:
-					m=0
-					while m<8:
-						n=0
-						while n<8:
-							m_=0
-							while m_<8:
-								n_=0
-								while n_<8:
-									U[m][n][k][l]+=A[m][n][m_][n_]*P[m_][n_][k][l]
-									n_+=1
-								m_+=1
-							print("i=",i," j=",j," k=",k," l=",l," m=",m," n=",n)
-							A_[i][j][k][l]+=R[i][j][m][n]*U[m][n][k][l]
-							n+=1
-						m+=1
+				while l<N/2:
+					U[m,n,k,l]=sum(sum(A[m,n,:,:]*P[:,:,k,l]))
+					l+=1
+				k+=1
+			n+=1
+		m+=1
+	i=0
+	while i<N/2:
+		j=0
+		while j<N/2:
+			k=0
+			while k<N/2:
+				l=0
+				while l<N/2:
+					A2h[i,j,k,l]=sum(sum(R[i,j,:,:]*U[:,:,k,l]))
 					l+=1
 				k+=1
 			j+=1
 		i+=1
-	return A_
+	return A2h
 
 def main():
 	A=makeA()
 #	print "A\n",A
 	P=makeP()
 	R=makeR(P)
-	A_=RAP(R,A,P)
+	A2h=RAP_easy(R,A,P)
 	i=1
 	j=1
 	k=1
 	l=1
+	
 #	Ah[i,j,k,l]=sum(sum(R[i][j][:][:]*sum(sum(A[m][n][:][:]*P[:][:][k][l]))))
 #	Ah=np.dot(R,np.dot(A,P))
 #	print "\nR\n",R
 #	print "\nR*A*P\n",RAP(R,A,P)
-	print "\nP\n",P[:][0][:]
-	print A[0][0]
-	print A_[0][0]
+#	print "\nP\n",P[:][0][:]
+#	print A
+	print A2h[0][0]
 #	print Ah[1][1]
 if __name__=="__main__":
 	main()
